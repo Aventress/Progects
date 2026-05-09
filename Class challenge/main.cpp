@@ -11,7 +11,7 @@ int main() {
 	size_t menu_choice{0};
 	
 	do {
-		std::cout << "Movie collecton\n Enter your choice: \n1. Add Movie\n2. Show all Movies in collection\n3. Increace watched count" << std::endl;
+		std::cout << "Movie collecton\n Enter your choice: \n1. Add Movie\n2. Show all Movies in collection\n3. Increace watched count\n 9.for exit" << std::endl;
 		std::cin >> menu_choice;
 		switch (menu_choice) {
 		case 1:
