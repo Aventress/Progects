@@ -6,6 +6,11 @@ Movie::Movie(std::string name, std::string description, size_t rating, size_t wa
 }
 Movie::~Movie(){ }
 
+Movie::Movie(const Movie& source) 
+	:Movie{source.name, source.description, source.rating, source.watched_count} {
+
+}
+
 void Movie::set_name(std::string n) { name = n; }
 std::string Movie::get_name() const { return name; }
 
