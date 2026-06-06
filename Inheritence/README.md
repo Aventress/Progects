@@ -113,6 +113,6 @@ Important Notes
 
     All deposit/withdraw operations are reported to std::cout directly inside the utility functions – this is convenient for demonstration but could be separated for a real application.
 
-License
+## License
 
 This project is for educational purposes. Free to use and modify.
