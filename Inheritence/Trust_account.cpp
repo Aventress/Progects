@@ -14,7 +14,7 @@ bool Trust_account::deposit(double ammount) {
 }
 
 bool Trust_account::withdraw(double ammount) {
-	static size_t counter{};
+
 	double allowed_summ_to_withdraw = balance * 0.2;
 	if (counter >= 3) {
 		std::cout << "You can withdraw only 3 times per year";

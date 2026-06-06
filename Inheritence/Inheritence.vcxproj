@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
     <ClCompile Include="Account_Util.cpp" />
+    <ClCompile Include="Checking_Account.cpp" />
     <ClCompile Include="Inheritence.cpp" />
     <ClCompile Include="Savings_Account.cpp" />
     <ClCompile Include="Trust_account.cpp" />
@@ -132,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="Account.h" />
     <ClInclude Include="Account_Util.h" />
+    <ClInclude Include="Checking_Account.h" />
     <ClInclude Include="Savings_Account.h" />
     <ClInclude Include="Trust_account.h" />
   </ItemGroup>

@@ -30,6 +30,9 @@
     <ClCompile Include="Trust_account.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Checking_Account.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Trust_account.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Checking_Account.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,6 +6,7 @@
 class Trust_account : public Savings_Account {
 	friend std::ostream& operator<<(std::ostream& os, const Trust_account& account);
 private:
+	size_t counter {};
 	static constexpr const char* default_trust_account_name = "Unnamed trust account";
 	static constexpr double def_balance = 0.0;
 	static constexpr double def_int_rate = 0.0;
