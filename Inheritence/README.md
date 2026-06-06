@@ -103,15 +103,15 @@ Deposited 1000.00 to [Trust_Account: Markplier: 6000.00, 2.00%] Now, minimal wit
 
 ... (further output shows withdrawal attempts and the 3‑withdrawal limit)
 
-Important Notes
+## Important Notes
 
-    The Trust_account uses a non‑static counter member (declared as size_t counter {}; in the header). This means every trust account object has its own withdrawal counter. The limit of 3 withdrawals is per object, not global.
+- The `Trust_account` uses a non-static counter member (declared as `size_t counter {};` in the header). This means every trust account object has its own withdrawal counter. The limit of 3 withdrawals is per object, not global.
 
-    The counter is not persisted between program runs – it only tracks withdrawals during the object’s lifetime.
+- The counter is not persisted between program runs – it only tracks withdrawals during the object’s lifetime.
 
-    The provided code does not use virtual functions, so the utility functions rely on compile‑time overloading for the correct account type. This works because each vector holds objects of a specific derived type. For polymorphic behaviour, you would need base class pointers and virtual methods.
+- The provided code does not use virtual functions, so the utility functions rely on compile-time overloading for the correct account type. This works because each vector holds objects of a specific derived type. For polymorphic behaviour, you would need base class pointers and virtual methods.
 
-    All deposit/withdraw operations are reported to std::cout directly inside the utility functions – this is convenient for demonstration but could be separated for a real application.
+- All deposit/withdraw operations are reported to `std::cout` directly inside the utility functions – this is convenient for demonstration but could be separated for a real application.
 
 ## License
 
