@@ -101,7 +101,8 @@ Deposited 1000.00 to [Trust_Account: MRBALL: 1000.00, 0.00%] Now, minimal withdr
 Deposited 1000.00 to [Trust_Account: GANDON: 3000.00, 0.00%] Now, minimal withdraw sum for you is: 600.00$
 Deposited 1000.00 to [Trust_Account: Markplier: 6000.00, 2.00%] Now, minimal withdraw sum for you is: 1200.00$
 
-... (further output shows withdrawal attempts and the 3‑withdrawal limit)
+... (further output shows withdrawal attempts and the 3‑withdrawal limit) 
+```
 
 ## Important Notes
 
