@@ -2,8 +2,10 @@
 #include "Account_Util.h"
 
 // Displays Account objects in a  vector of Account objects 
-void display(Account& account) {
-    std::cout << "\n=== Accounts ==========================================" << std::endl;
+void display(const Account* account) {
+    std::cout << *account << std::endl;
+}
+void display(const Account& account) {
     std::cout << account << std::endl;
 }
 
@@ -51,11 +53,6 @@ void withdraw(Account& account, double ammount) {
 // Helper functions for Savings Account class
 
 // Displays Savings Account objects in a  vector of Savings Account objects 
-void display(const std::vector<Savings_Account> &accounts) {
-    std::cout << "\n=== Savings Accounts ====================================" << std::endl;
-    for (const auto &acc: accounts) 
-        std::cout << acc << std::endl;
-}
 
 // Deposits supplied ammount to each Savings Account object in the vector
 void deposit(std::vector<Savings_Account> &accounts, double ammount) {
@@ -101,11 +98,6 @@ void withdraw(Savings_Account& account, double ammount) {
 // Helper functions for Trust Account class
 
 // Displays Trust Account objects in a  vector of Trust Account objects 
-void display(const std::vector<Trust_account>& accounts) {
-    std::cout << "\n=== Trust Accounts ====================================" << std::endl;
-    for (const auto& acc : accounts)
-        std::cout << acc << " Minimal withdraw sum for you is: " << acc.get_allowed_summ_to_withdraw() <<"$\n";
-}
 
 // Deposits supplied ammount to each Trust Account object in the vector
 void deposit(std::vector<Trust_account>& accounts, double ammount) {
@@ -152,11 +144,6 @@ void withdraw(Trust_account& account, double ammount) {
 // Helper functions for Checking Account class
 
 // Displays Trust Account objects in a  vector of Checking Account objects 
-void display(const std::vector<Checking_Account>& accounts) {
-    std::cout << "\n=== Checking Accounts ====================================" << std::endl;
-    for (const auto& acc : accounts)
-        std::cout << acc << std::endl;
-}
 
 // Deposits supplied ammount to each Checking Account object in the vector
 void deposit(std::vector<Checking_Account>& accounts, double ammount) {

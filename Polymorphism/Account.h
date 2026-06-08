@@ -18,5 +18,6 @@ public:
     virtual void print(std::ostream& os) const override;
     virtual bool deposit(double amount) = 0;
     virtual bool withdraw(double amount) = 0;
+
 };
 #endif

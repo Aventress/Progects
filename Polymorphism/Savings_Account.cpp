@@ -13,6 +13,7 @@ bool Savings_Account::withdraw(double amount) {
 }
 
 void Savings_Account::print(std::ostream& os) const {
+    std::cout << "\n===Savings Accounts ==========================================" << std::endl;
     std::cout << "[Savings Account: " << Savings_Account::name << " with balance: " 
     << Savings_Account::balance << "$ and initiate rate: " << Savings_Account::int_rate << "$ ]\n";
 }

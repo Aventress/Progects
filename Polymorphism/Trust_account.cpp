@@ -31,6 +31,7 @@ bool Trust_account::withdraw(double ammount) {
 }
 
 void Trust_account::print(std::ostream& os) const {
+	std::cout << "\n===Trust Accounts ==========================================" << std::endl;
 	std::cout << "[Trust Account: " << Trust_account::name << " with balance: "
 		<< Trust_account::balance << "$. Youre current withdraw minimal summ is: " << allowed_summ_to_withdraw
 	    << "$. And Youre curren withdraw count is(3 times per year) : " << counter << " times]\n";
