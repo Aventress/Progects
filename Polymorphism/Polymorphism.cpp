@@ -16,22 +16,37 @@ int main() {
     // Savings 
     Account* Sav_acc_1 = new Savings_Account{"MyMan", 200};
     Account* Sav_acc_2 = new Savings_Account{ "MyBoy", 200, 2.0 };
+    vector <Account*> vector_of_sav_acc;
+    vector_of_sav_acc.push_back(Sav_acc_1);
+    vector_of_sav_acc.push_back(Sav_acc_2);
     display(Sav_acc_2);
-    Sav_acc_1->deposit(1000);
-    Sav_acc_1->withdraw(100);
+    display(vector_of_sav_acc);
+   deposit(Sav_acc_2, 1000);
+    withdraw(Sav_acc_2, 200);
 
     // Checking
     Account* Check_acc = new Checking_Account;
     Account* Check_acc_2 = new Checking_Account{"BOY", 2000};
-    display(Check_acc);
-    Check_acc->deposit(1000);
-    Check_acc->withdraw(300);
+    vector <Account*> vector_of_check_acc;
+    vector_of_check_acc.push_back(Check_acc);
+    vector_of_check_acc.push_back(Check_acc_2);
+    //display(Check_acc);
+    display(vector_of_check_acc);
+    deposit(Check_acc, 1000);
+    withdraw(Check_acc_2, 100);
 
     // Trust
-    Account* Trust_acc = new Trust_account;
-    display(Trust_acc);
-    Trust_acc->deposit(1000);
-    Trust_acc->withdraw(300);
+    Account* Trust_acc_1 = new Trust_account;
+    Account* Trust_acc_2 = new Trust_account{"Chair", 7999};
+    Account* Trust_acc_3 = new Trust_account{"Pony", 5734};
+    vector <Account*> vector_of_trust_acc;
+    vector_of_trust_acc.push_back(Trust_acc_1);
+    vector_of_trust_acc.push_back(Trust_acc_2);
+    vector_of_trust_acc.push_back(Trust_acc_3);
+    display(Trust_acc_1);
+    display(vector_of_trust_acc);
+    deposit(Trust_acc_1, 1000);
+    withdraw(Trust_acc_1, 500);
 
     return 0;
 }
