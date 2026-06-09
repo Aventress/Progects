@@ -1,4 +1,4 @@
-### Bank Account Inheritance Hierarchy
+# Bank Account Inheritance Hierarchy
 
 This C++ console application demonstrates object-oriented programming with inheritance, polymorphism, and the interface segregation principle. It implements a simple banking system with four account types, each with its own rules for deposits and withdrawals.
 ## Project Structure
@@ -27,7 +27,7 @@ I_Printable
 
     Friend operator<< calls print(), enabling printing any derived object via base pointer/reference.
 
-Account
+### Account
 
     Stores name (string) and balance (double) as protected members.
 
@@ -35,7 +35,7 @@ Account
 
     Implements print() to display name and balance.
 
-Savings_Account (inherits Account)
+### Savings_Account (inherits Account)
 
     Adds int_rate (double, percentage).
 
@@ -43,7 +43,7 @@ Savings_Account (inherits Account)
 
     withdraw(amount): passes directly to base withdraw (no extra fee).
 
-Checking_Account (inherits Account)
+### Checking_Account (inherits Account)
 
     No extra data members, but a flat fee of 1.5 is applied on every withdrawal.
 
@@ -51,7 +51,7 @@ Checking_Account (inherits Account)
 
     deposit(amount): simply calls base deposit.
 
-Trust_account (inherits Savings_Account)
+### Trust_account (inherits Savings_Account)
 
     Adds counter (size_t) to track number of withdrawals (max 3 per object lifetime).
 
@@ -69,7 +69,7 @@ Trust_account (inherits Savings_Account)
 
 ## What the Main Program Does
 
-main() in Polymorphism.cpp demonstrates polymorphic behaviour using base class pointers (Account*). It:
+### main() in Polymorphism.cpp demonstrates polymorphic behaviour using base class pointers (Account*). It:
 
     Creates two Savings_Account objects, stores pointers in a vector<Account*>, displays them, deposits $1000, and withdraws $200.
 
@@ -80,7 +80,7 @@ main() in Polymorphism.cpp demonstrates polymorphic behaviour using base class p
 All operations use the utility functions display(), deposit(), and withdraw() from Account_Util, which work with Account* and vector<Account*>.
 
 ## Building and Running
-Using Visual Studio (provided .vcxproj)
+###  Using Visual Studio (provided .vcxproj)
 
     Open Polymorphism.vcxproj in Visual Studio 2022 or later.
 
