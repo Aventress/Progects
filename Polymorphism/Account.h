@@ -14,7 +14,7 @@ protected:
     double balance;
 public:
     Account(std::string name = def_name, double balance = def_balance);
-    virtual ~Account() {};
+    virtual ~Account() = default;
     virtual void print(std::ostream& os) const override;
     virtual bool deposit(double amount) = 0;
     virtual bool withdraw(double amount) = 0;

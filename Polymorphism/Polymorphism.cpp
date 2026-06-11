@@ -21,7 +21,7 @@ int main() {
     vector_of_sav_acc.push_back(Sav_acc_2);
     display(Sav_acc_2);
     display(vector_of_sav_acc);
-   deposit(Sav_acc_2, 1000);
+    deposit(Sav_acc_2, 1000);
     withdraw(Sav_acc_2, 200);
 
     // Checking
@@ -37,8 +37,8 @@ int main() {
 
     // Trust
     Account* Trust_acc_1 = new Trust_account;
-    Account* Trust_acc_2 = new Trust_account{"Chair", 7999};
-    Account* Trust_acc_3 = new Trust_account{"Pony", 5734};
+    Account* Trust_acc_2 = new Trust_account{"Chair", 7999, 2.5};
+    Account* Trust_acc_3 = new Trust_account{"Pony", 5734, 5.6};
     vector <Account*> vector_of_trust_acc;
     vector_of_trust_acc.push_back(Trust_acc_1);
     vector_of_trust_acc.push_back(Trust_acc_2);

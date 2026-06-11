@@ -22,5 +22,5 @@ bool Account::withdraw(double amount) {
 }
 
 void Account::print(std::ostream& os) const {
-    std::cout << "[Account: " << Account::name << " with balance: " << Account::balance << "$ ]\n";
+    std::cout << "[Account: " << name << " with balance: " << balance << "$ ]\n";
 }

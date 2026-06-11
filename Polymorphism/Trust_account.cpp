@@ -35,7 +35,7 @@ bool Trust_account::withdraw(double ammount) {
 
 void Trust_account::print(std::ostream& os) const {
 	std::cout << "[Trust Account: " << Trust_account::name << " with balance: "
-		<< Trust_account::balance << "$ ]" << std::endl;
+		<< Trust_account::balance << "$ and int rate " << Trust_account::int_rate << "$ ]" << std::endl;
 }
 
 double Trust_account::get_allowed_summ_to_withdraw() const{
