@@ -47,7 +47,13 @@ int main() {
     display(vector_of_trust_acc);
     deposit(Trust_acc_1, 1000);
     withdraw(Trust_acc_1, 500);
-
+    delete Sav_acc_1;
+    delete Sav_acc_2;
+    delete Check_acc;
+    delete Check_acc_2;
+    delete Trust_acc_1;
+    delete Trust_acc_2;
+    delete Trust_acc_3;
     return 0;
 }
 
