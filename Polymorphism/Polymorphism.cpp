@@ -12,7 +12,7 @@ using namespace std;
 int main() {
     cout.precision(2);
     cout << fixed;
-    
+
     // Savings 
     Account* Sav_acc_1 = new Savings_Account{"MyMan", 200};
     Account* Sav_acc_2 = new Savings_Account{ "MyBoy", 200, 2.0 };
