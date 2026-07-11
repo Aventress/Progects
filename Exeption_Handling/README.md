@@ -1,151 +1,162 @@
-# Bank Account Inheritance Hierarchy
+# Bank Account System with Smart Pointers and Exception Handling
 
-This C++ console application demonstrates object-oriented programming with inheritance, polymorphism, and the interface segregation principle. It implements a simple banking system with four account types, each with its own rules for deposits and withdrawals.
+This project is an **extension** of the previous *Inheritance* and *Polymorphism* banking examples. It builds upon the same class hierarchy (`Account` → `Savings_Account`, `Checking_Account`, `Trust_account`) but introduces:
+
+- **Smart pointers** (`std::shared_ptr`) for automatic memory management.
+- **Abstract base class** (`Account` now has pure virtual `deposit()` and `withdraw()`).
+- **Interface segregation** via `I_Printable` (provides a unified `operator<<` for all account types).
+- **Exception handling** – custom exceptions `NegativeBalanceException` and `InsufficentFundsException` are thrown when invalid operations occur.
+
+The main program (`Exeption_Handling.cpp`) demonstrates polymorphic behaviour using base class pointers, while safely managing resources with `shared_ptr` and gracefully catching exceptions.
+
+---
+
 ## Project Structure
-File	Description
-I_Printable.h/cpp	Interface with pure virtual print() method and overloaded operator<<
-Account.h/cpp	Abstract base class implementing I_Printable; declares pure virtual deposit/withdraw
-Savings_Account.h/cpp	Derived class adding an interest rate; deposit adds interest
-Checking_Account.h/cpp	Derived class adding a flat fee of $1.50 per withdrawal
-Trust_account.h/cpp	Derived from Savings_Account; gives bonus $50 on deposits ≥$500, restricts withdrawals (max 3 per year, each ≤20% of balance)
-Account_Util.h/cpp	Utility functions for displaying, depositing, and withdrawing on single Account* and vectors of Account*
-Polymorphism.cpp	Main program – tests all account types via base class pointers
+
+| File | Description |
+|------|-------------|
+| `I_Printable.h/cpp` | Interface with pure virtual `print()` and friend `operator<<` |
+| `Account.h/cpp` | Abstract base class implementing `I_Printable`; declares pure virtual `deposit`/`withdraw`; constructor throws `NegativeBalanceException` if balance < 0; `withdraw()` throws `InsufficentFundsException` if insufficient funds |
+| `Savings_Account.h/cpp` | Derived class adding interest rate; overrides `deposit()` to add interest; overrides `print()` |
+| `Checking_Account.h/cpp` | Derived class adding a flat fee of $1.50 per withdrawal; overrides `withdraw()` to add fee |
+| `Trust_account.h/cpp` | Derived from `Savings_Account`; adds bonus $50 on deposits ≥$500; restricts withdrawals (max 3 per year, each ≤20% of balance); maintains `allowed_summ_to_withdraw` and `counter` |
+| `Account_Util.h/cpp` | Utility functions for `display()`, `deposit()`, `withdraw()` working with `std::shared_ptr<Account>` and vectors thereof |
+| `NegativeBalanceException.h` | Custom exception class derived from `std::exception` |
+| `InsufficentFundsException.h` | Custom exception class derived from `std::exception` |
+| `Exeption_Handling.cpp` | Main program – creates accounts via `make_shared`, tests operations, and catches exceptions |
+
+---
+
 ## Class Hierarchy
-text
 
 I_Printable (interface)
-    ↑
+↑
 Account (abstract)
-    ├── Savings_Account
-    │    └── Trust_account
-    └── Checking_Account
+├── Savings_Account
+│ └── Trust_account
+└── Checking_Account
+text
 
-## Class Features
-I_Printable
 
-    Pure virtual void print(std::ostream&) const = 0
+---
 
-    Friend operator<< calls print(), enabling printing any derived object via base pointer/reference.
+## Key Features
 
-### Account
+### `I_Printable`
+- Pure virtual `void print(std::ostream&) const = 0`.
+- Friend `operator<<` calls `print()`, allowing any derived object to be printed via base pointer/reference.
 
-    Stores name (string) and balance (double) as protected members.
+### `Account` (abstract)
+- Stores `name` (string) and `balance` (double) as `protected` members.
+- Constructor throws `NegativeBalanceException` if `balance < 0`.
+- Pure virtual `deposit(double)` and `withdraw(double)` – makes the class abstract.
+- `withdraw()` throws `InsufficentFundsException` if the resulting balance would be negative.
+- Implements `print()` to show name and balance.
 
-    Pure virtual deposit(double) and withdraw(double) – makes Account abstract.
+### `Savings_Account`
+- Adds `int_rate` (double, percentage).
+- `deposit()`: adds interest (`amount * int_rate/100`) before calling base deposit.
+- `withdraw()`: directly calls base withdraw (no extra fee).
 
-    Implements print() to display name and balance.
+### `Checking_Account`
+- No extra data members, but a flat fee of **$1.50** is applied on every withdrawal.
+- `withdraw()`: adds `1.5` to the requested amount, then calls base withdraw.
+- `deposit()`: simply calls base deposit.
 
-### Savings_Account (inherits Account)
+### `Trust_account`
+- Adds `counter` (size_t) – limits withdrawals to **3 per account lifetime**.
+- Adds `allowed_summ_to_withdraw` (double) – stores **20% of current balance** as the maximum allowed per withdrawal.
+- `deposit()`: if `amount ≥ 500`, adds a **$50 bonus** before applying interest.
+- `withdraw()`:
+  - Fails if `counter >= 3` (prints a message).
+  - Fails if `amount > allowed_summ_to_withdraw` (prints a message).
+  - On success, increments `counter` and calls base `withdraw()`.
+  - Throws `InsufficentFundsException` if balance is insufficient (handled in base).
 
-    Adds int_rate (double, percentage).
-
-    deposit(amount): adds interest (amount * int_rate/100) before calling base deposit.
-
-    withdraw(amount): passes directly to base withdraw (no extra fee).
-
-### Checking_Account (inherits Account)
-
-    No extra data members, but a flat fee of 1.5 is applied on every withdrawal.
-
-    withdraw(amount): adds 1.5 to the withdrawal amount, then calls base withdraw.
-
-    deposit(amount): simply calls base deposit.
-
-### Trust_account (inherits Savings_Account)
-
-    Adds counter (size_t) to track number of withdrawals (max 3 per object lifetime).
-
-    Adds allowed_summ_to_withdraw (double) – stores 20% of current balance as the maximum allowed per withdrawal.
-
-    deposit(amount): if amount ≥ 500, an extra $50 bonus is added before interest is applied. Then the deposit (including bonus) is passed to Savings_Account::deposit().
-
-    withdraw(amount):
-
-        Fails if 3 withdrawals have already been made.
-
-        Fails if the withdrawal amount exceeds 20% of the current balance.
-
-        On success, increments counter and calls base withdraw.
+---
 
 ## What the Main Program Does
 
-### main() in Polymorphism.cpp demonstrates polymorphic behaviour using base class pointers (Account*). It:
+`Exeption_Handling.cpp` creates accounts using `std::shared_ptr` and `make_shared`. It tests each account type separately inside `try` blocks, catching both custom exceptions.
 
-    Creates two Savings_Account objects, stores pointers in a vector<Account*>, displays them, deposits $1000, and withdraws $200.
+### Savings Account Test
+- Creates `Savings_Account` with a positive balance, and one with a **negative** balance (commented out) to test `NegativeBalanceException`.
+- Displays, deposits, and withdraws from the account.
+- Also tests a withdrawal larger than the balance (commented out) to trigger `InsufficentFundsException`.
 
-    Creates two Checking_Account objects, stores pointers in a vector<Account*>, displays them, deposits $1000, and withdraws $100.
+### Checking Account Test
+- Creates a `Checking_Account`.
+- Performs deposit and withdrawal (fee applied automatically).
 
-    Creates three Trust_account objects, stores pointers in a vector<Account*>, displays them, deposits $1000, and withdraws $500 (testing the withdrawal limits).
+### Trust Account Test
+- Creates a `Trust_account`.
+- Performs deposit (bonus applied if ≥500) and withdrawal (checks 20% limit and 3‑withdrawal rule).
 
-All operations use the utility functions display(), deposit(), and withdraw() from Account_Util, which work with Account* and vector<Account*>.
+All operations are performed via base class pointers (`shared_ptr<Account>`), demonstrating **polymorphism**. Utility functions in `Account_Util` work with `shared_ptr` and vectors of `shared_ptr`.
+
+---
 
 ## Building and Running
-###  Using Visual Studio (provided .vcxproj)
 
-    Open Polymorphism.vcxproj in Visual Studio 2022 or later.
+### Using Visual Studio (provided `.vcxproj`)
+- Open the `.vcxproj` file in Visual Studio 2022 or later.
+- Select `Debug` or `Release` configuration.
+- Build and run (F5).
 
-    Select Debug or Release configuration.
-
-    Build and run (F5).
-
-## Using g++ (command line)
-bash
-
-g++ -std=c++17 I_Printable.cpp Account.cpp Savings_Account.cpp Checking_Account.cpp Trust_account.cpp Account_Util.cpp Polymorphism.cpp -o bank
+### Using g++ (command line)
+```bash
+g++ -std=c++17 I_Printable.cpp Account.cpp Savings_Account.cpp Checking_Account.cpp Trust_account.cpp Account_Util.cpp Exeption_Handling.cpp -o bank
 ./bank
 
-## Example Output (Partial)
+Example Output (Partial)
 text
 
 ======Display================================
-[Savings Account: MyMan with balance: 200.00$ and initiate rate: 0.00$ ]
+[Savings Account: Boy with balance: 200.00$ and initiate rate: 0.00$ ]
 
 ======Display================================
-[Savings Account: MyMan with balance: 200.00$ and initiate rate: 0.00$ ]
-[Savings Account: MyBoy with balance: 200.00$ and initiate rate: 2.00$ ]
+[Savings Account: Boy with balance: 200.00$ and initiate rate: 0.00$ ]
 
 ======Deposit================================
-Deposited 1000.00$ to [Savings Account: MyBoy with balance: 200.00$ and initiate rate: 2.00$ ]
+Deposited 1000.00$ to [Savings Account: Boy with balance: 1200.00$ and initiate rate: 0.00$ ]
+
+======Deposit================================
+Deposited 10.00$ to [Savings Account: Boy with balance: 1210.00$ and initiate rate: 0.00$ ]
 
 ======Withdraw================================
-Withdrawed 200.00$ to [Savings Account: MyBoy with balance: 1020.00$ and initiate rate: 2.00$ ]
+Withdrawed 200.00$ to [Savings Account: Boy with balance: 1010.00$ and initiate rate: 0.00$ ]
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+...
 ======Display================================
-[Checking Account: Unnamed Checking account with balance: 0.00$ ]
 [Checking Account: BOY with balance: 2000.00$ ]
 
 ======Deposit================================
-Deposited 1000.00$ to [Checking Account: Unnamed Checking account with balance: 1000.00$ ]
+Deposited 1000.00$ to [Checking Account: BOY with balance: 3000.00$ ]
 
 ======Withdraw================================
-Withdrawed 100.00$ to [Checking Account: BOY with balance: 1900.00$ ]
+Withdrawed 500.00$ to [Checking Account: BOY with balance: 2498.50$ ]
 
+...
 ======Display================================
-[Trust Account: Unnamed trust account with balance: 0.00$ ]
-
-======Display================================
-[Trust Account: Unnamed trust account with balance: 0.00$ ]
-[Trust Account: Chair with balance: 7999.00$ ]
-[Trust Account: Pony with balance: 5734.00$ ]
+[Trust Account: Pony with balance: 5734.00$ and int rate 5.60$ ]
 
 ======Deposit================================
-Deposited 1000.00$ to [Trust Account: Unnamed trust account with balance: 1000.00$ ]
+Deposited 1000.00$ to [Trust Account: Pony with balance: 6734.00$ and int rate 5.60$ ]
 
 ======Withdraw================================
-Withdrawed 500.00$ to [Trust Account: Unnamed trust account with balance: 500.00$ ]
+Withdrawed 500.00$ to [Trust Account: Pony with balance: 6234.00$ and int rate 5.60$ ]
 
-(Actual output may vary depending on interest calculations and withdrawal rules.)
+(Actual output may vary depending on interest rates and withdrawal limits.)
+```
 
-## Important Notes
+# Important Notes
 
-    The Trust_account uses a non‑static counter member, so each trust account object tracks its own withdrawals independently. The limit of 3 withdrawals is per object, not global.
+- Smart pointers ensure automatic memory deallocation – no manual `delete` needed.
+- The `Trust_account` uses a non-static `counter` member, so each object tracks its own withdrawals independently.
+- The exception handling demonstrates how to enforce business rules (non-negative balance, sufficient funds).
+- This project is a direct evolution of the previous Inheritance and Polymorphism examples.
 
-    The counter is not persisted between program runs – it only tracks withdrawals during the object’s lifetime.
-
-    Polymorphism is achieved by storing Account* pointers and calling virtual deposit, withdraw, and print methods. The utility functions in Account_Util are designed to work with base class pointers, making them reusable for any derived account type.
-
-    All deposit/withdraw operations are reported to std::cout inside the utility functions – this is convenient for demonstration but would be separated for a production application.
-
-## License
+# License
 
 This project is for educational purposes. Free to use and modify.
