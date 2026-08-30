@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+
+//Challenge 1
 struct City {
 	std::string name;
 	long population;
